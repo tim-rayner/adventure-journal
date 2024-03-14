@@ -16,6 +16,8 @@ import Globe from "react-globe.gl";
 export default function Map() {
   const { useState, useEffect, useMemo } = React;
 
+  const globeEl = useRef();
+
   const [countries, setCountries] = useState({ features: [] });
   const [labelsData, setLabelsData] = useState([]);
   const [hoverD, setHoverD] = useState();
@@ -44,6 +46,15 @@ export default function Map() {
       .then(setCountries);
   }, []);
 
+  useEffect(() => {
+    // globeEl.current.controls().autoRotate = true;
+    // globeEl.current.controls().autoRotateSpeed = 0.2;
+
+    const MAP_CENTER = { lat: 0, lng: 0, altitude: 4 };
+    //@ts-ignore
+    globeEl.current.pointOfView(MAP_CENTER, 0);
+  }, [globeEl]);
+
   //@ts-ignore
   const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 
@@ -60,6 +71,7 @@ export default function Map() {
 
   return (
     <Globe
+      ref={globeEl}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
       lineHoverPrecision={0}
