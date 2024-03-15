@@ -6,12 +6,13 @@ import React, {
   useCallback,
 } from "react";
 import * as THREE from "three";
+
 //@ts-ignore
-import { COUNTRIES_DATA } from "../../data/countries_data";
-//@ts-ignore
-import HEX_DATA from "../map/countries.geojson";
+import HEX_DATA from "../map/countriesx.geojson";
 //@ts-ignore
 import Globe from "react-globe.gl";
+
+const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "-99", "BG", "TR"];
 
 export default function Map() {
   const { useState, useEffect, useMemo } = React;
@@ -69,6 +70,13 @@ export default function Map() {
 
   colorScale.domain([0, maxVal]);
 
+  const renderCapColor = (d: object) => {
+    //@ts-ignore
+    console.log(`name: ${d.ADMIN} - code: ${d.ISO_A2}`);
+    //@ts-ignore
+    return MockVisitedCountries.includes(d.ISO_A2) ? "steelblue" : "red";
+  };
+
   return (
     <Globe
       ref={globeEl}
@@ -84,15 +92,15 @@ export default function Map() {
       labelAltitude={0.15}
       polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.01)}
       polygonCapColor={
-        (d) => (d === hoverD ? "steelblue" : "steelblue") //colorScale(getVal(d))
+        //@ts-ignore
+        ({ properties: d }) => renderCapColor(d) //colorScale(getVal(d))
       }
       polygonSideColor={() => "rgba(0, 100, 0, 0.35)"}
       polygonStrokeColor={() => "rgba(0, 100, 0, 0.15)"}
       //@ts-ignore
       polygonLabel={({ properties: d }) => `
-        <b>${d.ADMIN} (${d.ISO_A2}):</b> <br />
-        GDP: <i>${d.GDP_MD_EST}</i> M$<br/>
-        Population: <i>${d.POP_EST}</i>
+        <b>${d.ADMIN}</b> 
+
       `}
       //@ts-ignore
       onPolygonHover={setHoverD}
