@@ -5,6 +5,7 @@ import {
   faPen,
   faGear,
   faList,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
@@ -21,6 +22,7 @@ function ToolboxContent() {
     <div className="toolbox-content text-black rounded-lg z-50   h-fit">
       <ToolboxItem icon={faList} />
       <ToolboxItem icon={faPen} />
+      <ToolboxItem icon={faUserGroup} />
       <ToolboxItem icon={faGear} />
     </div>
   );
