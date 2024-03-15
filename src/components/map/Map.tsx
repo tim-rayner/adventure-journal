@@ -20,11 +20,12 @@ export default function Map() {
   const globeEl = useRef();
 
   const [countries, setCountries] = useState({ features: [] });
-
   const [hoverD, setHoverD] = useState();
-
   const [autoRotate, setAutoRotate] = useState(true);
-  const [autoRotateSpeed, setAutoRotateSpeed] = useState(0.2);
+  const [autoRotateSpeed, setAutoRotateSpeed] = useState(0.4);
+
+  const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
+  const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     // load data
@@ -39,6 +40,16 @@ export default function Map() {
     //@ts-ignore
     globeEl.current.pointOfView(MAP_CENTER, 0);
   }, [globeEl]);
+
+  // handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setGlobeHeight(window.innerHeight);
+      setGlobeWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // reset autoRotate on interaction
   useEffect(() => {
@@ -75,6 +86,8 @@ export default function Map() {
 
   return (
     <Globe
+      height={globeHeight}
+      width={globeWidth}
       ref={globeEl}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -86,7 +99,8 @@ export default function Map() {
       }
       //@ts-ignore
       polygonSideColor={({ properties: d }) => renderSideColor(d)}
-      polygonStrokeColor={() => "rgba(0, 100, 0, 0)"}
+      //@ts-ignore
+      polygonStrokeColor={({ properties: d }) => renderSideColor(d)}
       //@ts-ignore
       polygonLabel={({ properties: d }) => `
         <b>${d.ADMIN}</b> 
