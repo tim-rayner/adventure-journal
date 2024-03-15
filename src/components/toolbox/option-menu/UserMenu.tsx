@@ -1,4 +1,9 @@
 import { Dialog } from "primereact/dialog";
+import { COUNTRIES_DATA } from "../../../data/countries_data";
+import { useEffect, useState } from "react";
+import { Checkbox } from "primereact/checkbox";
+
+const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
 export default function UserMenu({
   visible,
@@ -7,24 +12,56 @@ export default function UserMenu({
   visible: boolean;
   onToggle: (visible: boolean) => void;
 }) {
+  const [countries, setCountries] = useState(COUNTRIES_DATA);
+  const [visitedCountries, setVisitedCountries] =
+    useState(MockVisitedCountries);
+
+  useEffect(() => {
+    setCountries(
+      COUNTRIES_DATA.map((country) => ({
+        ...country,
+        checked: visitedCountries.includes(country.country),
+      }))
+    );
+  }, []);
+
+  const handleCheckboxChange = (countryName: string) => {
+    setCountries(
+      countries.map((country) =>
+        country.name === countryName
+          ? // @ts-ignore
+            { ...country, checked: !country.checked }
+          : country
+      )
+    );
+  };
+
   return (
     <Dialog
       header="User Menu"
       visible={visible}
       style={{ width: "50vw" }}
-      // @ts-ignore
       onHide={() => onToggle(false)}
       draggable={false}
     >
-      <p className="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      <div className="user-menu-wrapper">
+        <p> </p>
+        <h3 className="text-lg font-bold">Countries</h3>
+        <ul className="m-0">
+          {countries.map((country) => (
+            <li key={country.country} className="flex items-center">
+              <Checkbox
+                // @ts-ignore
+                checked={country.checked}
+                className="mr-2"
+                onChange={() => handleCheckboxChange(country.name)}
+              />
+              <span>{country.name}</span>
+              <span className="text-xs">({country.country})</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Dialog>
   );
 }

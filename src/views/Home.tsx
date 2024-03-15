@@ -8,16 +8,16 @@ import OptionSocial from "../components/toolbox/option-social/OptionSocial";
 import OptionLayer from "../components/toolbox/option-layer/OptionLayer";
 
 export default function Home() {
-  const [optionLayerVisible, setOptionLayerVisible] = useState<boolean>(true);
-  const [optionSocialVisible, setOptionSocialVisible] =
-    useState<boolean>(false);
-  const [optionMenuVisible, setOptionMenuVisible] = useState<boolean>(false);
+  const [optionMenuVisible, setOptionMenuVisible] = useState<boolean>(true);
+
   const [optionSettingsVisible, setOptionSettinsgsVisible] =
     useState<boolean>(false);
 
-  const onItemClick = (item: any) => {
-    console.log("Home recieved: ", item);
-  };
+  const [optionSocialVisible, setOptionSocialVisible] =
+    useState<boolean>(false);
+
+  const [optionLayerVisible, setOptionLayerVisible] = useState<boolean>(false);
+
   return (
     <div className="home flex flex-col relative text-white bg-[#282c34] min-h-[100vh]">
       <Legend />
