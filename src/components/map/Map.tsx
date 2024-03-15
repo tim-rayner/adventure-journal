@@ -12,7 +12,7 @@ import HEX_DATA from "../map/countriesx.geojson";
 //@ts-ignore
 import Globe from "react-globe.gl";
 
-const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "-99", "BG", "TR"];
+const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
 export default function Map() {
   const { useState, useEffect, useMemo } = React;
@@ -72,7 +72,9 @@ export default function Map() {
 
   const renderCapColor = (d: object) => {
     //@ts-ignore
-    return MockVisitedCountries.includes(d.ISO_A2) ? "steelblue" : "red";
+    return MockVisitedCountries.includes(d.ISO_A2)
+      ? "steelblue"
+      : "rgba(220,20,60, 0.45)";
   };
 
   return (

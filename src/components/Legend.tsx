@@ -5,7 +5,7 @@ const legendData = [
   },
   {
     label: "Not Visited",
-    color: "red",
+    color: "rgba(220,20,60, 0.75)",
   },
 ];
 
