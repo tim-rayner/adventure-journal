@@ -26,23 +26,6 @@ export default function Map() {
   const [autoRotate, setAutoRotate] = useState(true);
   const [autoRotateSpeed, setAutoRotateSpeed] = useState(0.2);
 
-  // useEffect(() => {
-  //   fetch(HEX_DATA)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setCountries(data);
-
-  //       if (labelsData.length > 0) return;
-  //       const labels = countryLabelData.map((feat: any) => ({
-  //         lat: feat.latitude,
-  //         lng: feat.latitude,
-  //         label: feat.name,
-  //       }));
-  //       //@ts-ignore
-  //       setLabelsData(labels);
-  //     });
-  // }, []);
-
   useEffect(() => {
     // load data
     fetch(HEX_DATA)
@@ -50,56 +33,69 @@ export default function Map() {
       .then(setCountries);
   }, []);
 
+  // set initial camera position
   useEffect(() => {
-    //@ts-ignore
-    globeEl.current.controls().autoRotate = autoRotate;
-    //@ts-ignore
-    globeEl.current.controls().autoRotateSpeed = autoRotateSpeed;
-
     const MAP_CENTER = { lat: 0, lng: 0, altitude: 4 };
     //@ts-ignore
     globeEl.current.pointOfView(MAP_CENTER, 0);
   }, [globeEl]);
 
-  // GDP per capita (avoiding countries with small pop)
-  const getVal = (feat: any) =>
-    feat.properties.GDP_MD_EST / Math.max(1e5, feat.properties.POP_EST);
-
-  const maxVal = useMemo(
-    () => Math.max(...countries.features.map(getVal)),
-    [countries]
-  );
+  // reset autoRotate on interaction
+  useEffect(() => {
+    //@ts-ignore
+    globeEl.current.controls().autoRotate = autoRotate;
+    //@ts-ignore
+    globeEl.current.controls().autoRotateSpeed = autoRotateSpeed;
+  }, [autoRotate, autoRotateSpeed]);
 
   const renderCapColor = (d: object) => {
     //@ts-ignore
     return MockVisitedCountries.includes(d.ISO_A2)
       ? "steelblue"
-      : "rgba(220,20,60, 0.45)";
+      : "rgba(220,20,60, 0.55)";
+  };
+
+  const renderSideColor = (d: object) => {
+    //@ts-ignore
+    return MockVisitedCountries.includes(d.ISO_A2)
+      ? "rgba(70,130,180, 0.75)"
+      : "rgba(220,20,60, 0.75)";
+  };
+
+  const onHexHover = (d: object) => {
+    if (d === null) {
+      setAutoRotate(true);
+    } else {
+      setAutoRotate(false);
+    }
+
+    //@ts-ignore
+    setHoverD(d);
   };
 
   return (
     <Globe
-      className="globe"
       ref={globeEl}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
       polygonsData={countries.features}
-      polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.01)}
+      polygonAltitude={(d) => (d === hoverD ? 0.06 : 0.01)}
       polygonCapColor={
         //@ts-ignore
         ({ properties: d }) => renderCapColor(d)
       }
-      polygonSideColor={() => "rgba(0, 100, 0, 0.25)"}
-      polygonStrokeColor={() => "rgba(0, 100, 0, 0.15)"}
+      //@ts-ignore
+      polygonSideColor={({ properties: d }) => renderSideColor(d)}
+      polygonStrokeColor={() => "rgba(0, 100, 0, 0)"}
       //@ts-ignore
       polygonLabel={({ properties: d }) => `
         <b>${d.ADMIN}</b> 
       `}
       //@ts-ignore
-      onPolygonHover={setHoverD}
+      onPolygonHover={(d) => onHexHover(d)}
       polygonsTransitionDuration={300}
       hexPolygonResolution={3} //values higher than 3 makes it buggy
-      hexPolygonMargin={0.62}
+      hexPolygonMargin={0}
       hexPolygonColor={useCallback(() => "#1b66b1", [])}
     />
   );
