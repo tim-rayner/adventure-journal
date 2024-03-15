@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useRef, useCallback } from "react";
 import * as THREE from "three";
 
 //@ts-ignore
@@ -15,7 +9,7 @@ import Globe from "react-globe.gl";
 const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
 export default function Map() {
-  const { useState, useEffect, useMemo } = React;
+  const { useState, useEffect } = React;
 
   const globeEl = useRef();
 
@@ -27,6 +21,7 @@ export default function Map() {
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
   const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
 
+  //load Hex data
   useEffect(() => {
     // load data
     fetch(HEX_DATA)
@@ -59,6 +54,8 @@ export default function Map() {
     globeEl.current.controls().autoRotateSpeed = autoRotateSpeed;
   }, [autoRotate, autoRotateSpeed]);
 
+  //Functions
+
   const renderCapColor = (d: object) => {
     //@ts-ignore
     return MockVisitedCountries.includes(d.ISO_A2)
@@ -74,12 +71,7 @@ export default function Map() {
   };
 
   const onHexHover = (d: object) => {
-    if (d === null) {
-      setAutoRotate(true);
-    } else {
-      setAutoRotate(false);
-    }
-
+    setAutoRotate(d === null);
     //@ts-ignore
     setHoverD(d);
   };
