@@ -13,17 +13,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -37,4 +26,55 @@
   }
 }
 
-/** threeJS stuff */
+.home {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+}
+canvas {
+}
+
+/** Legend */
+
+.legend-wrapper {
+  position: absolute;
+  top: 09;
+  left: 0;
+  width: fit-content;
+
+  z-index: 100;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.13);
+  padding: 10px;
+  padding-right: 150px;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border: solid 1px white;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 15px;
+}
+
+.legend-label {
+  margin-top: auto;
+  margin-bottom: auto;
+}

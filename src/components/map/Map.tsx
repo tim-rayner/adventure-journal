@@ -72,13 +72,12 @@ export default function Map() {
 
   const renderCapColor = (d: object) => {
     //@ts-ignore
-    console.log(`name: ${d.ADMIN} - code: ${d.ISO_A2}`);
-    //@ts-ignore
     return MockVisitedCountries.includes(d.ISO_A2) ? "steelblue" : "red";
   };
 
   return (
     <Globe
+      className="globe"
       ref={globeEl}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -93,9 +92,9 @@ export default function Map() {
       polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.01)}
       polygonCapColor={
         //@ts-ignore
-        ({ properties: d }) => renderCapColor(d) //colorScale(getVal(d))
+        ({ properties: d }) => renderCapColor(d)
       }
-      polygonSideColor={() => "rgba(0, 100, 0, 0.35)"}
+      polygonSideColor={() => "rgba(0, 100, 0, 0.25)"}
       polygonStrokeColor={() => "rgba(0, 100, 0, 0.15)"}
       //@ts-ignore
       polygonLabel={({ properties: d }) => `
