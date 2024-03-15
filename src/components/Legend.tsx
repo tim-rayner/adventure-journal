@@ -11,15 +11,15 @@ const legendData = [
 
 export default function Legend() {
   return (
-    <div className="legend-wrapper">
-      <div className="legend">
+    <div className="legend-wrapper absolute top-0 left-0 w-fit z-50">
+      <div className="legend flex flex-col text-white p-10 pr-16 text-xl">
         {legendData.map((item, i) => (
-          <div key={i} className="legend-item">
+          <div key={i} className="legend-item flex flex-row m-2">
             <div
-              className="legend-color"
+              className="legend-color w-[20px] h-[20px] border border-white my-auto mr-2"
               style={{ backgroundColor: item.color }}
             ></div>
-            <div className="legend-label">{item.label}</div>
+            <div className="legend-label my-auto">{item.label}</div>
           </div>
         ))}
       </div>

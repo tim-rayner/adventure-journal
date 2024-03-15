@@ -20,8 +20,11 @@ export default function Map() {
   const globeEl = useRef();
 
   const [countries, setCountries] = useState({ features: [] });
-  const [labelsData, setLabelsData] = useState([]);
+
   const [hoverD, setHoverD] = useState();
+
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotateSpeed, setAutoRotateSpeed] = useState(0.2);
 
   // useEffect(() => {
   //   fetch(HEX_DATA)
@@ -48,16 +51,15 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    // globeEl.current.controls().autoRotate = true;
-    // globeEl.current.controls().autoRotateSpeed = 0.2;
+    //@ts-ignore
+    globeEl.current.controls().autoRotate = autoRotate;
+    //@ts-ignore
+    globeEl.current.controls().autoRotateSpeed = autoRotateSpeed;
 
     const MAP_CENTER = { lat: 0, lng: 0, altitude: 4 };
     //@ts-ignore
     globeEl.current.pointOfView(MAP_CENTER, 0);
   }, [globeEl]);
-
-  //@ts-ignore
-  const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 
   // GDP per capita (avoiding countries with small pop)
   const getVal = (feat: any) =>
@@ -67,8 +69,6 @@ export default function Map() {
     () => Math.max(...countries.features.map(getVal)),
     [countries]
   );
-
-  colorScale.domain([0, maxVal]);
 
   const renderCapColor = (d: object) => {
     //@ts-ignore
@@ -83,14 +83,7 @@ export default function Map() {
       ref={globeEl}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      lineHoverPrecision={0}
       polygonsData={countries.features}
-      labelsData={labelsData}
-      //@ts-ignore
-      labelText={(d) => d.text}
-      labelSize={1.6}
-      labelColor={useCallback(() => "white", [])}
-      labelAltitude={0.15}
       polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.01)}
       polygonCapColor={
         //@ts-ignore
@@ -101,7 +94,6 @@ export default function Map() {
       //@ts-ignore
       polygonLabel={({ properties: d }) => `
         <b>${d.ADMIN}</b> 
-
       `}
       //@ts-ignore
       onPolygonHover={setHoverD}
