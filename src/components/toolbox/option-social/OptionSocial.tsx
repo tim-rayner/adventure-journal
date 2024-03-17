@@ -1,4 +1,7 @@
 import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { useState } from "react";
+import { Button } from "primereact/button";
 
 export default function OptionSocial({
   visible,
@@ -7,6 +10,7 @@ export default function OptionSocial({
   visible: boolean;
   onToggle: (visible: boolean) => void;
 }) {
+  const [friendCode, setFriendCode] = useState<string>("");
   return (
     <Dialog
       header="Social"
@@ -16,15 +20,21 @@ export default function OptionSocial({
       onHide={() => onToggle(false)}
       draggable={false}
     >
-      <p className="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      <div className="w-full flex flex-col">
+        <p className="m-0">
+          Connect with a friends exploration map, and compare your progress with
+          theirs, or team up and explore the world together.
+        </p>
+        <div className="flex w-2/3 m-auto">
+          <InputText
+            value={friendCode}
+            onChange={(e) => setFriendCode(e.target.value)}
+            className=" my-12 mr-0"
+            placeholder="e.g. X12PNW456W"
+          />
+          <Button label="Explore" className="h-fit my-auto" />
+        </div>
+      </div>
     </Dialog>
   );
 }

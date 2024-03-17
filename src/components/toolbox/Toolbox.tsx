@@ -19,6 +19,8 @@ function ToolboxItem({ icon }: { icon: any }) {
 }
 
 function ToolboxContent() {
+  /**@TODO replace this functionality with https://primereact.org/speeddial/ */
+
   return (
     <div className="toolbox-content text-black rounded-lg z-50   h-fit">
       <ToolboxItem icon={faList} />

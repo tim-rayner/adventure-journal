@@ -10,13 +10,12 @@ import OptionLayer from "../components/toolbox/option-layer/OptionLayer";
 export default function Home() {
   const [optionMenuVisible, setOptionMenuVisible] = useState<boolean>(false);
 
-  const [optionSocialVisible, setOptionSocialVisible] =
-    useState<boolean>(false);
+  const [optionSocialVisible, setOptionSocialVisible] = useState<boolean>(true);
 
   const [optionLayerVisible, setOptionLayerVisible] = useState<boolean>(false);
 
   const [optionSettingsVisible, setOptionSettinsgsVisible] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   return (
     <div className="home flex flex-col relative text-white bg-[#282c34] min-h-[100vh]">
