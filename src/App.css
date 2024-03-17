@@ -37,3 +37,15 @@
     transform: rotate(360deg);
   }
 }
+
+@media (min-width: 1024px) {
+  .mobilefeature {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .largeOnly {
+    display: none;
+  }
+}

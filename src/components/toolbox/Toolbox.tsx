@@ -2,73 +2,91 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faXmark,
-  faPen,
   faGear,
   faList,
   faUserGroup,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
 
-function ToolboxItem({ icon }: { icon: any }) {
-  return (
-    <div className="toolbox-content-item bg-white text-black rounded-full h-[50px] w-[50px] flex cursor-pointer my-6 hover:bg-slate-300">
-      <FontAwesomeIcon icon={icon} className="m-auto  text-xl" />
-    </div>
-  );
-}
+import { SpeedDial } from "primereact/speeddial";
 
-function ToolboxContent() {
-  /**@TODO replace this functionality with https://primereact.org/speeddial/ */
-
-  return (
-    <div className="toolbox-content text-black rounded-lg z-50   h-fit">
-      <ToolboxItem icon={faList} />
-      <ToolboxItem icon={faLayerGroup} />
-      <ToolboxItem icon={faUserGroup} />
-      <ToolboxItem icon={faGear} />
-    </div>
-  );
-}
+import { MenuItem } from "primereact/menuitem";
 
 export default function Toolbox() {
-  const toolboxRef = useRef(null);
+  const items: MenuItem[] = [
+    {
+      label: "Upload",
+      icon: () => <FontAwesomeIcon icon={faGear} />,
+      command: () => {
+        //router.push("/fileupload");
+      },
+    },
+    {
+      label: "Update",
+      icon: () => <FontAwesomeIcon icon={faLayerGroup} />,
+      command: () => {
+        // toast.current.show({
+        //   severity: "success",
+        //   summary: "Update",
+        //   detail: "Data Updated",
+        // });
+      },
+    },
+    {
+      label: "Delete",
+      icon: () => <FontAwesomeIcon icon={faUserGroup} />,
+      command: () => {
+        // toast.current.show({
+        //   severity: "error",
+        //   summary: "Delete",
+        //   detail: "Data Deleted",
+        // });
+      },
+    },
 
-  const [toolboxOpen, setToolboxOpen] = useState(false);
-
-  const toolBoxContent = toolboxOpen ? <ToolboxContent /> : null;
-
-  useEffect(() => {
-    function handleClickOutside(event: Event) {
-      // @ts-ignore
-      if (toolboxRef.current && !toolboxRef.current.contains(event.target)) {
-        setToolboxOpen(false);
-      }
-    }
-
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-
-    /**@EXPLAIN - return a cleanup to remove the event listener, following best practices.*/
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [toolboxRef]);
+    {
+      label: "Add",
+      icon: () => <FontAwesomeIcon icon={faList} />,
+      // command: () => {
+      //   toast.current.show({
+      //     severity: "info",
+      //     summary: "Add",
+      //     detail: "Data Added",
+      //   });
+      // },
+    },
+  ];
 
   return (
-    <div
-      ref={toolboxRef}
-      className="toolbox-wrapper  p-6 absolute bottom-[2.5vh] left-1/2 md:left-[5.5vw] -translate-x-1/2 z-50 "
-    >
-      {toolBoxContent}
+    <div className="toolbox-wrapper p-6 absolute bottom-[2.5vh] left-1/2 md:left-[5.5vw] -translate-x-1/2 z-50 ">
       <div
-        className="toolbox bg-white text-black rounded-full h-[50px] w-[50px] flex cursor-pointer"
-        onClick={() => setToolboxOpen(!toolboxOpen)}
+        style={{ position: "relative", height: "200px" }}
+        className="largeOnly"
       >
-        <FontAwesomeIcon
-          icon={toolboxOpen ? faXmark : faBars}
-          className="m-auto  text-xl"
+        <SpeedDial
+          model={items}
+          radius={80}
+          type="semi-circle"
+          direction="right"
+          style={{ top: "calc(50% - 2rem)", left: 0 }}
+          showIcon={() => <FontAwesomeIcon icon={faBars} />}
+          hideIcon={() => <FontAwesomeIcon icon={faXmark} />}
+        />
+      </div>
+
+      {/* //mobile */}
+      <div
+        style={{ position: "relative", height: "200px" }}
+        className="mobilefeature"
+      >
+        <SpeedDial
+          model={items}
+          radius={80}
+          type="semi-circle"
+          direction="up"
+          style={{ top: "calc(50% - 2rem)", left: "calc(50% - 2rem)" }}
+          showIcon={() => <FontAwesomeIcon icon={faBars} />}
+          hideIcon={() => <FontAwesomeIcon icon={faXmark} />}
         />
       </div>
     </div>
