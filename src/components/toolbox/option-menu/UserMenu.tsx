@@ -2,6 +2,17 @@ import { Dialog } from "primereact/dialog";
 import { COUNTRIES_DATA } from "../../../data/countries_data";
 import { useEffect, useState } from "react";
 import { Checkbox } from "primereact/checkbox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faBars,
+  faXmark,
+  faPen,
+  faGear,
+  faList,
+  faUserGroup,
+  faLayerGroup,
+} from "@fortawesome/free-solid-svg-icons";
 
 const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 

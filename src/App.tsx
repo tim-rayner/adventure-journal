@@ -1,15 +1,26 @@
-import React from "react";
 import "./App.css";
+import "primereact/resources/themes/saga-blue/theme.css";
 import Home from "./views/Home";
-import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
+import { PrimeReactProvider } from "primereact/api";
+
+<head>
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+              const style = document.createElement('style')
+              style.innerHTML = '@layer tailwind-base, primereact, tailwind-utilities;'
+              style.setAttribute('type', 'text/css')
+              document.querySelector('head').prepend(style)
+            `,
+    }}
+  />
+</head>;
 
 function App() {
   return (
-    <div className="App">
-      <PrimeReactProvider>
-        <Home />
-      </PrimeReactProvider>
-    </div>
+    <PrimeReactProvider>
+      <Home />
+    </PrimeReactProvider>
   );
 }
 

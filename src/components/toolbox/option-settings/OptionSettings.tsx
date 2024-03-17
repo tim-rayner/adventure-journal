@@ -1,4 +1,7 @@
+import React, { useState } from "react";
 import { Dialog } from "primereact/dialog";
+import { Slider } from "primereact/slider";
+import { Checkbox } from "primereact/checkbox";
 
 export default function OptionSettings({
   visible,
@@ -7,6 +10,9 @@ export default function OptionSettings({
   visible: boolean;
   onToggle: (visible: boolean) => void;
 }) {
+  const [globeSpeedSlider, setGlobeSpeedSlider] = useState(0);
+  const [globeAutoRotate, setGlobeAutoRotate] = useState(true);
+
   return (
     <Dialog
       header="Settings"
@@ -16,15 +22,31 @@ export default function OptionSettings({
       onHide={() => onToggle(false)}
       draggable={false}
     >
-      <p className="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      <div className="flex pt-4 w-full flex-col gap-7">
+        <div className="input-field w-full flex">
+          <label className="font-bold flex-col w-1/2 m-auto ">
+            Globe Speed
+          </label>
+          <Slider
+            //@ts-ignore
+            value={globeSpeedSlider}
+            //@ts-ignore
+            onChange={(e) => setGlobeSpeedSlider(e.value)}
+            className="w-full flex-col m-auto"
+          />
+        </div>
+
+        <div className="input-field w-full flex ">
+          <label className="font-bold flex-col w-1/2 m-auto text-left">
+            Globe Auto Rotate
+          </label>
+          <Checkbox
+            onChange={(e) => setGlobeAutoRotate(e.checked ? true : false)}
+            checked={globeAutoRotate}
+            className="w-full m-auto"
+          ></Checkbox>
+        </div>
+      </div>
     </Dialog>
   );
 }

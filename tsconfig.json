@@ -16,5 +16,15 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "use": [
+    {
+      "loader": "require.resolve('eslint-loader')",
+      "options": {
+        "formatter": "eslintFormatter",
+        "eslintPath": "require.resolve('eslint')",
+        "emitWarning": false
+      }
+    }
+  ]
 }
