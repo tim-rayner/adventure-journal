@@ -74,7 +74,7 @@ export default function Map() {
   const renderCapColor = (d: object) => {
     //@ts-ignore
     return localVisitedCountries.includes(d.ISO_A2)
-      ? "steelblue"
+      ? "rgba(65, 245, 135, 0.65)"
       : "rgba(220,20,60, 0.55)";
   };
 

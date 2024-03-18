@@ -1,7 +1,7 @@
 const legendData = [
   {
     label: "Visited",
-    color: "steelblue",
+    color: "rgba(65, 245, 135, 1)",
   },
   {
     label: "Not Visited",
