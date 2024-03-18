@@ -55,7 +55,7 @@ export default function UserMenu({ visible }: { visible: boolean }) {
     <Dialog
       header="User Menu"
       visible={visible}
-      style={{ width: "50vw" }}
+      className="userMenuDialog"
       onHide={() => onClose()}
       draggable={false}
     >

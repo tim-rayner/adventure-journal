@@ -19,7 +19,7 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
     <Dialog
       header="Settings"
       visible={visible}
-      style={{ width: "50vw" }}
+      className="userMenuDialog"
       // @ts-ignore
       onHide={() => onClose()}
       draggable={false}

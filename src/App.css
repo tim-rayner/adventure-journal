@@ -49,3 +49,19 @@
     display: none;
   }
 }
+
+.p-speeddial-button {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+.userMenuDialog {
+  width: 75vw;
+}
+
+@media (min-width: 768px) {
+  .userMenuDialog {
+    width: 50vw;
+  }
+}

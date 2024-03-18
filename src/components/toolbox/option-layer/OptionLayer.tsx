@@ -23,7 +23,7 @@ export default function OptionLayer({ visible }: { visible: boolean }) {
     <Dialog
       header="Layers"
       visible={visible}
-      style={{ width: "50vw" }}
+      className="userMenuDialog"
       // @ts-ignore
       onHide={() => onClose()}
       draggable={false}

@@ -78,7 +78,10 @@ export default function Toolbox() {
           radius={80}
           type="semi-circle"
           direction="up"
-          style={{ top: "calc(50% - 2rem)", left: "calc(50% - 2rem)" }}
+          style={{
+            top: "calc(50% - 2rem)",
+            left: "calc(50% - 2rem)",
+          }}
           showIcon={() => <FontAwesomeIcon icon={faBars} />}
           hideIcon={() => <FontAwesomeIcon icon={faXmark} />}
         />
