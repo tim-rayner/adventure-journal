@@ -57,6 +57,10 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [globeAutoRotate]);
 
+  useEffect(() => {
+    setGlobeAutoRotate(globeState.globeAutoRotate);
+  }, [globeState.globeAutoRotate]);
+
   //update when store updates using useEffect
   useEffect(() => {
     setOptionMenuVisible(toolBoxState.menuOpen);
@@ -76,7 +80,8 @@ export default function Home() {
       <OptionSettings visible={optionSettingsVisible} />
       <div className="largeOnly absolute bottom-0 right-0 p-6 text-xl opacity-60 flex justify-center items-center w-full ">
         <p>
-          Press <SpaceBarIcon className="-mb-2" /> to pause globe spinning
+          Press <SpaceBarIcon className="-mb-2" /> to{" "}
+          {globeAutoRotate ? "pause" : "start"} globe rotation
         </p>
       </div>
     </div>
