@@ -19,6 +19,19 @@ export default function UserMenu({ visible }: { visible: boolean }) {
 
   const [countries, setCountries] = useState(COUNTRIES_DATA);
   const [visitedCountries, setVisitedCountries] = useState(globeStateCountries);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleCheckboxChange = (country: string) => {
     setVisitedCountries(country);
@@ -36,6 +49,7 @@ export default function UserMenu({ visible }: { visible: boolean }) {
       className="userMenuDialog"
       onHide={() => onClose()}
       draggable={false}
+      position={viewportWidth < 768 ? "top" : "center"}
     >
       <div className="user-menu-wrapper">
         <h3 className="text-lg font-bold">Countries</h3>
