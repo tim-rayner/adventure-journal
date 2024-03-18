@@ -6,17 +6,23 @@ import HEX_DATA from "../map/countriesx.geojson";
 //@ts-ignore
 import Globe from "react-globe.gl";
 
+//Stores
+import { useSelector } from "react-redux";
+
 const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
 export default function Map() {
+  //@ts-ignore
+  const globeState = useSelector((state) => state.map?.globe);
+
   const { useState, useEffect } = React;
 
   const globeEl = useRef();
 
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
-  const [autoRotate, setAutoRotate] = useState(true);
-  const [autoRotateSpeed, setAutoRotateSpeed] = useState(0.4);
+  const [autoRotate, setAutoRotate] = useState(globeState.globeAutoRotate);
+  const [autoRotateSpeed, setAutoRotateSpeed] = useState(globeState.globeSpeed);
 
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
   const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
@@ -49,10 +55,10 @@ export default function Map() {
   // reset autoRotate on interaction
   useEffect(() => {
     //@ts-ignore
-    globeEl.current.controls().autoRotate = autoRotate;
+    globeEl.current.controls().autoRotate = globeState.globeAutoRotate;
     //@ts-ignore
-    globeEl.current.controls().autoRotateSpeed = autoRotateSpeed;
-  }, [autoRotate, autoRotateSpeed]);
+    globeEl.current.controls().autoRotateSpeed = globeState.globeSpeed;
+  }, [globeState.globeAutoRotate, globeState.globeSpeed]);
 
   //Functions
 
