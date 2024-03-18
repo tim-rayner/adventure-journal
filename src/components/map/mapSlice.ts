@@ -15,7 +15,8 @@ export const mapSlice = createSlice({
       globeAutoRotate: true,
     },
 
-    visitedCountries: ["GB", "GR", "ES", "NL", "US", "BG", "TR"],
+    visitedCountries: [],
+    visitedCountryCodes: [],
   },
   reducers: {
     increment: (state) => {
@@ -48,8 +49,12 @@ export const mapSlice = createSlice({
       state.globe.globeAutoRotate = action.payload;
     },
     updateVisitedCountries: (state, action) => {
-      console.log("action.payload", action.payload);
       state.visitedCountries = action.payload;
+      //map the country names to their respective country codes
+      state.visitedCountryCodes = action.payload.map(
+        //@ts-ignore
+        (country) => country.country
+      );
     },
   },
 });

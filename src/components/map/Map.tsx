@@ -9,13 +9,14 @@ import Globe from "react-globe.gl";
 import { useDispatch, useSelector } from "react-redux";
 import { updatedGlobeAutoRotate } from "./mapSlice";
 
-const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
-
 export default function Map() {
   //@ts-ignore
   const globeState = useSelector((state) => state.map?.globe);
-  //@ts-ignore
-  const visitedCountries = useSelector((state) => state.map?.visitedCountries);
+
+  const visitedCountries = useSelector(
+    //@ts-ignore
+    (state) => state.map?.visitedCountryCodes
+  );
   const dispatch = useDispatch();
 
   const { useState, useEffect } = React;
@@ -24,11 +25,8 @@ export default function Map() {
 
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
-  const [autoRotate, setAutoRotate] = useState(globeState.globeAutoRotate);
-  const [autoRotateSpeed, setAutoRotateSpeed] = useState(globeState.globeSpeed);
   const [localVisitedCountries, setLocalVisitedCountries] =
     useState(visitedCountries);
-
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
   const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
 
@@ -90,7 +88,6 @@ export default function Map() {
   /**@TODO if autorotate has been toggled in settings, ignore this functionality */
   const onHexHover = (d: object) => {
     dispatch(updatedGlobeAutoRotate(d === null));
-    setAutoRotate(d === null);
     //@ts-ignore
     setHoverD(d);
   };

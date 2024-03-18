@@ -6,14 +6,28 @@ import { useEffect, useState } from "react";
 import OptionSettings from "../components/toolbox/option-settings/OptionSettings";
 import OptionSocial from "../components/toolbox/option-social/OptionSocial";
 import OptionLayer from "../components/toolbox/option-layer/OptionLayer";
-
+import SpaceBarIcon from "@mui/icons-material/SpaceBar";
 //Stores
-import { toggleLayer } from "../components/map/mapSlice";
-import { useSelector } from "react-redux";
+import {
+  toggleLayer,
+  updatedGlobeAutoRotate,
+} from "../components/map/mapSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { SpaceBar } from "@mui/icons-material";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const globeState = useSelector(
+    //@ts-ignore
+    (state) => state.map?.globe
+  );
+
   //@ts-ignore
   const toolBoxState = useSelector((state) => state.map?.toolBox);
+
+  const [globeAutoRotate, setGlobeAutoRotate] = useState<boolean>(
+    globeState.globeAutoRotate
+  );
 
   const [optionMenuVisible, setOptionMenuVisible] = useState<boolean>(
     toolBoxState.menuOpen
@@ -31,6 +45,18 @@ export default function Home() {
     toolBoxState.settingsOpen
   );
 
+  //add event listener to change globe rotate toggle when the user presses the spacebar
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        dispatch(updatedGlobeAutoRotate(!globeAutoRotate));
+        setGlobeAutoRotate(!globeAutoRotate);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [globeAutoRotate]);
+
   //update when store updates using useEffect
   useEffect(() => {
     setOptionMenuVisible(toolBoxState.menuOpen);
@@ -41,13 +67,18 @@ export default function Home() {
 
   return (
     <div className="home flex flex-col relative text-white bg-[#282c34] min-h-[100vh]">
-      <Legend />
+      <div className="flex justify-center"></div>
       <Map />
       <Toolbox />
       <UserMenu visible={optionMenuVisible} />
       <OptionSocial visible={optionSocialVisible} />
       <OptionLayer visible={optionLayerVisible} />
       <OptionSettings visible={optionSettingsVisible} />
+      <div className="largeOnly absolute bottom-0 right-0 p-6 text-xl opacity-60 flex justify-center items-center w-full ">
+        <p>
+          Press <SpaceBarIcon className="-mb-2" /> to pause globe spinning
+        </p>
+      </div>
     </div>
   );
 }
