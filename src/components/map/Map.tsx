@@ -1,5 +1,4 @@
 import React, { useRef, useCallback } from "react";
-import * as THREE from "three";
 
 //@ts-ignore
 import HEX_DATA from "../map/countriesx.geojson";
@@ -7,13 +6,17 @@ import HEX_DATA from "../map/countriesx.geojson";
 import Globe from "react-globe.gl";
 
 //Stores
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedGlobeAutoRotate } from "./mapSlice";
 
 const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
 export default function Map() {
   //@ts-ignore
   const globeState = useSelector((state) => state.map?.globe);
+  //@ts-ignore
+  const visitedCountries = useSelector((state) => state.map?.visitedCountries);
+  const dispatch = useDispatch();
 
   const { useState, useEffect } = React;
 
@@ -23,6 +26,8 @@ export default function Map() {
   const [hoverD, setHoverD] = useState();
   const [autoRotate, setAutoRotate] = useState(globeState.globeAutoRotate);
   const [autoRotateSpeed, setAutoRotateSpeed] = useState(globeState.globeSpeed);
+  const [localVisitedCountries, setVisitedCountries] =
+    useState(visitedCountries);
 
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
   const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
@@ -60,23 +65,30 @@ export default function Map() {
     globeEl.current.controls().autoRotateSpeed = globeState.globeSpeed;
   }, [globeState.globeAutoRotate, globeState.globeSpeed]);
 
+  //reset selected countries on store change
+  useEffect(() => {
+    setVisitedCountries(visitedCountries);
+  }, [visitedCountries]);
+
   //Functions
 
   const renderCapColor = (d: object) => {
     //@ts-ignore
-    return MockVisitedCountries.includes(d.ISO_A2)
+    return localVisitedCountries.includes(d.ISO_A2)
       ? "steelblue"
       : "rgba(220,20,60, 0.55)";
   };
 
   const renderSideColor = (d: object) => {
     //@ts-ignore
-    return MockVisitedCountries.includes(d.ISO_A2)
+    return localVisitedCountries.includes(d.ISO_A2)
       ? "rgba(70,130,180, 0.75)"
       : "rgba(220,20,60, 0.75)";
   };
 
+  /**@TODO if autorotate has been toggled in settings, ignore this functionality */
   const onHexHover = (d: object) => {
+    dispatch(updatedGlobeAutoRotate(d === null));
     setAutoRotate(d === null);
     //@ts-ignore
     setHoverD(d);

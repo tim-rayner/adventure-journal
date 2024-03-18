@@ -2,41 +2,50 @@ import { Dialog } from "primereact/dialog";
 import { COUNTRIES_DATA } from "../../../data/countries_data";
 import { useEffect, useState } from "react";
 import { Checkbox } from "primereact/checkbox";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-  faBars,
-  faXmark,
-  faPen,
-  faGear,
-  faList,
-  faUserGroup,
-  faLayerGroup,
-} from "@fortawesome/free-solid-svg-icons";
-
+//Types
+import { CountryCode } from "../../../types/countries";
 //Stores
 import { useSelector, useDispatch } from "react-redux";
-import { toggleLayer } from "../../map/mapSlice";
-
-const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
+import { toggleLayer, updateVisitedCountries } from "../../map/mapSlice";
 
 export default function UserMenu({ visible }: { visible: boolean }) {
   const dispatch = useDispatch();
 
+  const globeStateCountries = useSelector(
+    //@ts-ignore
+    (state) => state.map?.visitedCountries
+  );
+
   const [countries, setCountries] = useState(COUNTRIES_DATA);
-  const [visitedCountries, setVisitedCountries] =
-    useState(MockVisitedCountries);
+  const [visitedCountries, setVisitedCountries] = useState(globeStateCountries);
 
   useEffect(() => {
-    setCountries(
-      COUNTRIES_DATA.map((country) => ({
-        ...country,
-        checked: visitedCountries.includes(country.country),
-      }))
-    );
+    if (visitedCountries?.length) {
+      setCountries(
+        COUNTRIES_DATA.map((country) => ({
+          ...country,
+          checked: visitedCountries.includes(country.country),
+        }))
+      );
+    }
   }, []);
 
-  const handleCheckboxChange = (countryName: string) => {
+  const handleCheckboxChange = (countryName: string, countryCode?: string) => {
+    const countryCodeSelected =
+      CountryCode[countryName as keyof typeof CountryCode];
+
+    if (visitedCountries.includes(countryCodeSelected)) {
+      setVisitedCountries(
+        // @ts-ignore
+        visitedCountries.filter((country) => country !== countryCodeSelected)
+      );
+    } else {
+      setVisitedCountries([...visitedCountries, countryCodeSelected]);
+    }
+
+    dispatch(updateVisitedCountries(visitedCountries));
+
     setCountries(
       countries.map((country) =>
         country.name === countryName
@@ -69,7 +78,9 @@ export default function UserMenu({ visible }: { visible: boolean }) {
                 // @ts-ignore
                 checked={country.checked}
                 className="mr-2"
-                onChange={() => handleCheckboxChange(country.name)}
+                onChange={() =>
+                  handleCheckboxChange(country.name, country.country)
+                }
               />
               <span>{country.name}</span>
               <span className="text-xs">({country.country})</span>

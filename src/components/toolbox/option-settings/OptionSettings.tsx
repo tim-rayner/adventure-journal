@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Slider } from "primereact/slider";
 import { Checkbox } from "primereact/checkbox";

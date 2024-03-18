@@ -11,9 +11,11 @@ export const mapSlice = createSlice({
       socialOpen: false,
     },
     globe: {
-      globeSpeed: 50,
+      globeSpeed: 1.5,
       globeAutoRotate: true,
     },
+
+    visitedCountries: ["GB", "GR", "ES", "NL", "US", "BG", "TR"],
   },
   reducers: {
     increment: (state) => {
@@ -45,6 +47,9 @@ export const mapSlice = createSlice({
     updatedGlobeAutoRotate: (state, action) => {
       state.globe.globeAutoRotate = action.payload;
     },
+    updateVisitedCountries: (state, action) => {
+      state.visitedCountries = action.payload;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   toggleLayer,
   updatedGlobeSpeed,
   updatedGlobeAutoRotate,
+  updateVisitedCountries,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;
