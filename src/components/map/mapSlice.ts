@@ -48,6 +48,7 @@ export const mapSlice = createSlice({
       state.globe.globeAutoRotate = action.payload;
     },
     updateVisitedCountries: (state, action) => {
+      console.log("action.payload", action.payload);
       state.visitedCountries = action.payload;
     },
   },

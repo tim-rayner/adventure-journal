@@ -40,11 +40,19 @@ export default function UserMenu({ visible }: { visible: boolean }) {
         // @ts-ignore
         visitedCountries.filter((country) => country !== countryCodeSelected)
       );
+
+      dispatch(
+        updateVisitedCountries(
+          // @ts-ignore
+          visitedCountries.filter((country) => country !== countryCodeSelected)
+        )
+      );
     } else {
       setVisitedCountries([...visitedCountries, countryCodeSelected]);
+      dispatch(
+        updateVisitedCountries([...visitedCountries, countryCodeSelected])
+      );
     }
-
-    dispatch(updateVisitedCountries(visitedCountries));
 
     setCountries(
       countries.map((country) =>

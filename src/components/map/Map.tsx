@@ -26,7 +26,7 @@ export default function Map() {
   const [hoverD, setHoverD] = useState();
   const [autoRotate, setAutoRotate] = useState(globeState.globeAutoRotate);
   const [autoRotateSpeed, setAutoRotateSpeed] = useState(globeState.globeSpeed);
-  const [localVisitedCountries, setVisitedCountries] =
+  const [localVisitedCountries, setLocalVisitedCountries] =
     useState(visitedCountries);
 
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
@@ -35,6 +35,7 @@ export default function Map() {
   //load Hex data
   useEffect(() => {
     // load data
+    //@ts-ignore
     fetch(HEX_DATA)
       .then((res) => res.json())
       .then(setCountries);
@@ -67,7 +68,7 @@ export default function Map() {
 
   //reset selected countries on store change
   useEffect(() => {
-    setVisitedCountries(visitedCountries);
+    setLocalVisitedCountries(visitedCountries);
   }, [visitedCountries]);
 
   //Functions
