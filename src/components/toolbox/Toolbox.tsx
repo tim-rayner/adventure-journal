@@ -12,53 +12,47 @@ import { SpeedDial } from "primereact/speeddial";
 
 import { MenuItem } from "primereact/menuitem";
 
+//Stores
+import { toggleLayer } from "../../components/map/mapSlice";
+import { useDispatch } from "react-redux";
+
 export default function Toolbox() {
+  const dispatch = useDispatch();
+
   const items: MenuItem[] = [
     {
-      label: "Upload",
+      label: "Settings",
       icon: () => <FontAwesomeIcon icon={faGear} />,
       command: () => {
-        //router.push("/fileupload");
+        dispatch(toggleLayer("settingsOpen"));
       },
     },
     {
-      label: "Update",
+      label: "Map Layers",
       icon: () => <FontAwesomeIcon icon={faLayerGroup} />,
       command: () => {
-        // toast.current.show({
-        //   severity: "success",
-        //   summary: "Update",
-        //   detail: "Data Updated",
-        // });
+        dispatch(toggleLayer("layerOpen"));
       },
     },
     {
-      label: "Delete",
+      label: "Social",
       icon: () => <FontAwesomeIcon icon={faUserGroup} />,
       command: () => {
-        // toast.current.show({
-        //   severity: "error",
-        //   summary: "Delete",
-        //   detail: "Data Deleted",
-        // });
+        dispatch(toggleLayer("socialOpen"));
       },
     },
 
     {
-      label: "Add",
+      label: "Menu",
       icon: () => <FontAwesomeIcon icon={faList} />,
-      // command: () => {
-      //   toast.current.show({
-      //     severity: "info",
-      //     summary: "Add",
-      //     detail: "Data Added",
-      //   });
-      // },
+      command: () => {
+        dispatch(toggleLayer("menuOpen"));
+      },
     },
   ];
 
   return (
-    <div className="toolbox-wrapper p-6 absolute bottom-[2.5vh] left-1/2 md:left-[5.5vw] -translate-x-1/2 z-50 ">
+    <div className="toolbox-wrapper p-6 absolute bottom-[2.5vh] left-1/2 md:left-[1.5vw] -translate-x-1/2 z-50 ">
       <div
         style={{ position: "relative", height: "200px" }}
         className="largeOnly"

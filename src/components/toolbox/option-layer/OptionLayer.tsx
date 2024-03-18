@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { Dialog } from "primereact/dialog";
 
 import { InputSwitch } from "primereact/inputswitch";
-export default function OptionLayer({
-  visible,
-  onToggle,
-}: {
-  visible: boolean;
-  onToggle: (visible: boolean) => void;
-}) {
+import { useDispatch } from "react-redux";
+import { toggleLayer } from "../../map/mapSlice";
+export default function OptionLayer({ visible }: { visible: boolean }) {
+  const dispatch = useDispatch();
+
   const [darkModeChecked, setDarkModeChecked] = useState(true);
   const [explorationChecked, setExplorationChecked] = useState(true);
   const [explorationPercentageChecked, setExplorationPercentageChecked] =
@@ -17,13 +15,17 @@ export default function OptionLayer({
   const [mapImageChecked, setMapImageChecked] = useState(true);
   useState(false);
 
+  const onClose = () => {
+    dispatch(toggleLayer("layerOpen"));
+  };
+
   return (
     <Dialog
       header="Layers"
       visible={visible}
       style={{ width: "50vw" }}
       // @ts-ignore
-      onHide={() => onToggle(false)}
+      onHide={() => onClose()}
       draggable={false}
     >
       <div className="flex pt-4 w-full flex-col gap-7">

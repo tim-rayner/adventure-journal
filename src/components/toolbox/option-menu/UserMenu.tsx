@@ -14,15 +14,15 @@ import {
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
+//Stores
+import { useSelector, useDispatch } from "react-redux";
+import { toggleLayer } from "../../map/mapSlice";
+
 const MockVisitedCountries = ["GB", "GR", "ES", "NL", "US", "BG", "TR"];
 
-export default function UserMenu({
-  visible,
-  onToggle,
-}: {
-  visible: boolean;
-  onToggle: (visible: boolean) => void;
-}) {
+export default function UserMenu({ visible }: { visible: boolean }) {
+  const dispatch = useDispatch();
+
   const [countries, setCountries] = useState(COUNTRIES_DATA);
   const [visitedCountries, setVisitedCountries] =
     useState(MockVisitedCountries);
@@ -47,12 +47,16 @@ export default function UserMenu({
     );
   };
 
+  const onClose = () => {
+    dispatch(toggleLayer("menuOpen"));
+  };
+
   return (
     <Dialog
       header="User Menu"
       visible={visible}
       style={{ width: "50vw" }}
-      onHide={() => onToggle(false)}
+      onHide={() => onClose()}
       draggable={false}
     >
       <div className="user-menu-wrapper">

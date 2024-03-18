@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Slider } from "primereact/slider";
 import { Checkbox } from "primereact/checkbox";
+import { useDispatch } from "react-redux";
+import { toggleLayer } from "../../map/mapSlice";
 
-export default function OptionSettings({
-  visible,
-  onToggle,
-}: {
-  visible: boolean;
-  onToggle: (visible: boolean) => void;
-}) {
+export default function OptionSettings({ visible }: { visible: boolean }) {
+  const dispatch = useDispatch();
+
   const [globeSpeedSlider, setGlobeSpeedSlider] = useState(0);
   const [globeAutoRotate, setGlobeAutoRotate] = useState(true);
+
+  const onClose = () => {
+    dispatch(toggleLayer("settingsOpen"));
+  };
 
   return (
     <Dialog
@@ -19,7 +21,7 @@ export default function OptionSettings({
       visible={visible}
       style={{ width: "50vw" }}
       // @ts-ignore
-      onHide={() => onToggle(false)}
+      onHide={() => onClose()}
       draggable={false}
     >
       <div className="flex pt-4 w-full flex-col gap-7">

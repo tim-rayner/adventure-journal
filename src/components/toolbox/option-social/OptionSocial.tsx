@@ -2,22 +2,25 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Button } from "primereact/button";
+import { useDispatch } from "react-redux";
+import { toggleLayer } from "../../map/mapSlice";
 
-export default function OptionSocial({
-  visible,
-  onToggle,
-}: {
-  visible: boolean;
-  onToggle: (visible: boolean) => void;
-}) {
+export default function OptionSocial({ visible }: { visible: boolean }) {
+  const dispatch = useDispatch();
+
   const [friendCode, setFriendCode] = useState<string>("");
+
+  const onClose = () => {
+    dispatch(toggleLayer("socialOpen"));
+  };
+
   return (
     <Dialog
       header="Social"
       visible={visible}
       style={{ width: "50vw" }}
       // @ts-ignore
-      onHide={() => onToggle(false)}
+      onHide={() => onClose()}
       draggable={false}
     >
       <div className="w-full flex flex-col">
