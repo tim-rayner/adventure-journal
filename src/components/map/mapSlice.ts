@@ -10,6 +10,10 @@ export const mapSlice = createSlice({
       settingsOpen: false,
       socialOpen: false,
     },
+    globe: {
+      globeSpeed: 50,
+      globeAutoRotate: true,
+    },
   },
   reducers: {
     increment: (state) => {
@@ -32,11 +36,26 @@ export const mapSlice = createSlice({
       //@ts-ignore
       state.toolBox[action.payload] = !state.toolBox[action.payload];
     },
+
+    updatedGlobeSpeed: (state, action) => {
+      //TODO: update the globe speed slider value (out of 100) to reflect the speed of the globe in terms of
+      //rotation speed with the api.
+      state.globe.globeSpeed = action.payload;
+    },
+    updatedGlobeAutoRotate: (state, action) => {
+      state.globe.globeAutoRotate = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount, toggleLayer } =
-  mapSlice.actions;
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  toggleLayer,
+  updatedGlobeSpeed,
+  updatedGlobeAutoRotate,
+} = mapSlice.actions;
 
 export default mapSlice.reducer;

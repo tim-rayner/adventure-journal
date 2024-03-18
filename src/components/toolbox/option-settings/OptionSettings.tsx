@@ -1,19 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Slider } from "primereact/slider";
 import { Checkbox } from "primereact/checkbox";
-import { useDispatch } from "react-redux";
-import { toggleLayer } from "../../map/mapSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleLayer,
+  updatedGlobeSpeed,
+  updatedGlobeAutoRotate,
+} from "../../map/mapSlice";
 
 export default function OptionSettings({ visible }: { visible: boolean }) {
   const dispatch = useDispatch();
 
-  const [globeSpeedSlider, setGlobeSpeedSlider] = useState(0);
-  const [globeAutoRotate, setGlobeAutoRotate] = useState(true);
+  //@ts-ignore
+  const globeState = useSelector((state) => state.map?.globe);
+
+  const [globeSpeedSlider, setGlobeSpeedSlider] = useState(
+    globeState.globeSpeed
+  );
+  const [globeAutoRotate, setGlobeAutoRotate] = useState(
+    globeState.globeAutoRotate
+  );
 
   const onClose = () => {
     dispatch(toggleLayer("settingsOpen"));
   };
+
+  const onGlobeSpeedChange = (e: any) => {
+    dispatch(updatedGlobeSpeed(e));
+    setGlobeSpeedSlider(e); // Update local state
+  };
+
+  const onGlobeAutoRotateChange = (e: any) => {
+    dispatch(updatedGlobeAutoRotate(e));
+    setGlobeAutoRotate(e); // Update local state
+  };
+
+  useEffect(() => {
+    setGlobeSpeedSlider(globeState.globeSpeed);
+    setGlobeAutoRotate(globeState.globeAutoRotate);
+  }, [globeState.globeSpeed, globeState.globeAutoRotate]);
 
   return (
     <Dialog
@@ -33,7 +59,7 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
             //@ts-ignore
             value={globeSpeedSlider}
             //@ts-ignore
-            onChange={(e) => setGlobeSpeedSlider(e.value)}
+            onChange={(e) => onGlobeSpeedChange(e.value)}
             className="w-full flex-col m-auto"
           />
         </div>
@@ -43,7 +69,7 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
             Globe Auto Rotate
           </label>
           <Checkbox
-            onChange={(e) => setGlobeAutoRotate(e.checked ? true : false)}
+            onChange={(e) => onGlobeAutoRotateChange(e.checked ? true : false)}
             checked={globeAutoRotate}
             className="w-full m-auto"
           ></Checkbox>
