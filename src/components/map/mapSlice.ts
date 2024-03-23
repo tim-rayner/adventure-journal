@@ -13,6 +13,11 @@ export const mapSlice = createSlice({
     globe: {
       globeSpeed: 1.5,
       globeAutoRotate: true,
+      darkMode: false,
+      explorationMode: true,
+      showExplorationPercentage: false,
+      showCities: false,
+      showMapImg: true,
     },
 
     visitedCountries: [],
@@ -48,6 +53,22 @@ export const mapSlice = createSlice({
     updatedGlobeAutoRotate: (state, action) => {
       state.globe.globeAutoRotate = action.payload;
     },
+    toggleDarkMode: (state, action) => {
+      state.globe.darkMode = action.payload;
+    },
+    toggleExplorationMode: (state, action) => {
+      state.globe.explorationMode = action.payload;
+    },
+    toggleShowExplorationPercentage: (state, action) => {
+      state.globe.showExplorationPercentage = action.payload;
+    },
+    toggleShowCities: (state, action) => {
+      state.globe.showCities = action.payload;
+    },
+    toggleMapImg: (state, action) => {
+      state.globe.showMapImg = action.payload;
+    },
+
     updateVisitedCountries: (state, action) => {
       state.visitedCountries = action.payload;
       //map the country names to their respective country codes
@@ -68,6 +89,11 @@ export const {
   updatedGlobeSpeed,
   updatedGlobeAutoRotate,
   updateVisitedCountries,
+  toggleDarkMode,
+  toggleExplorationMode,
+  toggleShowExplorationPercentage,
+  toggleShowCities,
+  toggleMapImg,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

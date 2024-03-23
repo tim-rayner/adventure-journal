@@ -7,7 +7,11 @@ import Globe from "react-globe.gl";
 
 //Stores
 import { useDispatch, useSelector } from "react-redux";
-import { updatedGlobeAutoRotate } from "./mapSlice";
+import {
+  toggleDarkMode,
+  toggleMapImg,
+  updatedGlobeAutoRotate,
+} from "./mapSlice";
 
 export default function Map() {
   //@ts-ignore
@@ -29,6 +33,11 @@ export default function Map() {
     useState(visitedCountries);
   const [globeWidth, setGlobeWidth] = useState(window.innerWidth);
   const [globeHeight, setGlobeHeight] = useState(window.innerHeight);
+
+  const [mapImg, setMapImg] = useState(
+    globeState.darkMode ? "earth-night.jpg" : "earth-day.jpg"
+  );
+  const [showMapImg, setShowMapImg] = useState(globeState.showMapImg);
 
   //load Hex data
   useEffect(() => {
@@ -64,6 +73,29 @@ export default function Map() {
     globeEl.current.controls().autoRotateSpeed = globeState.globeSpeed;
   }, [globeState.globeAutoRotate, globeState.globeSpeed]);
 
+  //reset globe attributes on store change
+  useEffect(() => {
+    console.log("something changed");
+    //@ts-ignore
+    globeEl.current.controls().autoRotate = globeState.globeAutoRotate;
+    //@ts-ignore
+    globeEl.current.controls().autoRotateSpeed = globeState.globeSpeed;
+
+    setMapImg(globeState.darkMode ? "earth-night.jpg" : "earth-day.jpg");
+
+    setShowMapImg(globeState.showMapImg);
+
+    //@ts-ignore
+  }, [
+    globeState.globeAutoRotate,
+    globeState.globeSpeed,
+    globeState.darkMode,
+    globeState.explorationMode,
+    globeState.showExplorationPercentage,
+    globeState.showCities,
+    globeState.showMapImg,
+  ]);
+
   //reset selected countries on store change
   useEffect(() => {
     setLocalVisitedCountries(visitedCountries);
@@ -97,7 +129,9 @@ export default function Map() {
       height={globeHeight}
       width={globeWidth}
       ref={globeEl}
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+      globeImageUrl={
+        showMapImg ? `//unpkg.com/three-globe/example/img/${mapImg}` : null
+      }
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
       polygonsData={countries.features}
       polygonAltitude={(d) => (d === hoverD ? 0.06 : 0.01)}
