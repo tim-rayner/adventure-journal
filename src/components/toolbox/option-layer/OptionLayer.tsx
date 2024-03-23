@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//@ts-nocheck
+import { useState } from "react";
 import { Dialog } from "primereact/dialog";
 
 import { InputSwitch } from "primereact/inputswitch";
@@ -14,10 +15,7 @@ import {
 } from "../../map/mapSlice";
 
 export default function OptionLayer({ visible }: { visible: boolean }) {
-  const globeState = useSelector(
-    //@ts-ignore
-    (state) => state.map?.globe
-  );
+  const globeState = useSelector((state) => state.map?.globe);
 
   const dispatch = useDispatch();
 
@@ -33,27 +31,27 @@ export default function OptionLayer({ visible }: { visible: boolean }) {
   const [mapImageChecked, setMapImageChecked] = useState(globeState.showMapImg);
   useState(false);
 
-  const handleDarkModeToggle = (e: any) => {
+  const handleDarkModeToggle = (e) => {
     setDarkModeChecked(e);
     dispatch(toggleDarkMode(e));
   };
 
-  const handleExplorationModeToggle = (e: any) => {
+  const handleExplorationModeToggle = (e) => {
     setExplorationChecked(e);
     dispatch(toggleExplorationMode(e));
   };
 
-  const handleExplorationPercentageToggle = (e: any) => {
+  const handleExplorationPercentageToggle = (e) => {
     setExplorationPercentageChecked(e);
     dispatch(toggleShowExplorationPercentage(e));
   };
 
-  const handleShowCitiesToggle = (e: any) => {
+  const handleShowCitiesToggle = (e) => {
     setShowCitiesChecked(e);
     dispatch(toggleShowCities(e));
   };
 
-  const handleMapImageToggle = (e: any) => {
+  const handleMapImageToggle = (e) => {
     setMapImageChecked(e);
     dispatch(toggleMapImg(e));
   };
@@ -67,7 +65,6 @@ export default function OptionLayer({ visible }: { visible: boolean }) {
       header="Layers"
       visible={visible}
       className="userMenuDialog"
-      // @ts-ignore
       onHide={() => onClose()}
       draggable={false}
     >

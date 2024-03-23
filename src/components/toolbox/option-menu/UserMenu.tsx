@@ -1,10 +1,10 @@
+//@ts-nocheck
 import { Dialog } from "primereact/dialog";
 import COUNTRIES_DATA from "../../../data/countries_data_2.json";
 import { useEffect, useState } from "react";
-import { Checkbox } from "primereact/checkbox";
+
 import { MultiSelect } from "primereact/multiselect";
-//Types
-import { CountryCode } from "../../../types/countries";
+
 //Stores
 import { useSelector, useDispatch } from "react-redux";
 import { toggleLayer, updateVisitedCountries } from "../../map/mapSlice";
@@ -13,7 +13,6 @@ export default function UserMenu({ visible }: { visible: boolean }) {
   const dispatch = useDispatch();
 
   const globeStateCountries = useSelector(
-    //@ts-ignore
     (state) => state.map?.visitedCountries
   );
 

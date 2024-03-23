@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import Map from "../components/map/Map";
 import Legend from "../components/Legend";
 import Toolbox from "../components/toolbox/Toolbox";
@@ -8,21 +10,13 @@ import OptionSocial from "../components/toolbox/option-social/OptionSocial";
 import OptionLayer from "../components/toolbox/option-layer/OptionLayer";
 import SpaceBarIcon from "@mui/icons-material/SpaceBar";
 //Stores
-import {
-  toggleLayer,
-  updatedGlobeAutoRotate,
-} from "../components/map/mapSlice";
+import { updatedGlobeAutoRotate } from "../components/map/mapSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { SpaceBar } from "@mui/icons-material";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const globeState = useSelector(
-    //@ts-ignore
-    (state) => state.map?.globe
-  );
+  const globeState = useSelector((state) => state.map?.globe);
 
-  //@ts-ignore
   const toolBoxState = useSelector((state) => state.map?.toolBox);
 
   const [globeAutoRotate, setGlobeAutoRotate] = useState<boolean>(

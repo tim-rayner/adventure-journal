@@ -19,7 +19,6 @@ export default function OptionSocial({ visible }: { visible: boolean }) {
       header="Social"
       visible={visible}
       className="userMenuDialog"
-      // @ts-ignore
       onHide={() => onClose()}
       draggable={false}
     >

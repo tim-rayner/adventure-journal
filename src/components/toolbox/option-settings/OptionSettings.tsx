@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Slider } from "primereact/slider";
@@ -12,7 +13,6 @@ import {
 export default function OptionSettings({ visible }: { visible: boolean }) {
   const dispatch = useDispatch();
 
-  //@ts-ignore
   const globeState = useSelector((state) => state.map?.globe);
 
   const [globeSpeedSlider, setGlobeSpeedSlider] = useState(
@@ -26,12 +26,12 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
     dispatch(toggleLayer("settingsOpen"));
   };
 
-  const onGlobeSpeedChange = (e: any) => {
+  const onGlobeSpeedChange = (e) => {
     dispatch(updatedGlobeSpeed(e));
     setGlobeSpeedSlider(e); // Update local state
   };
 
-  const onGlobeAutoRotateChange = (e: any) => {
+  const onGlobeAutoRotateChange = (e) => {
     dispatch(updatedGlobeAutoRotate(e));
     setGlobeAutoRotate(e); // Update local state
   };
@@ -46,7 +46,6 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
       header="Settings"
       visible={visible}
       className="userMenuDialog"
-      // @ts-ignore
       onHide={() => onClose()}
       draggable={false}
     >
@@ -56,9 +55,7 @@ export default function OptionSettings({ visible }: { visible: boolean }) {
             Globe Speed
           </label>
           <Slider
-            //@ts-ignore
             value={globeSpeedSlider}
-            //@ts-ignore
             onChange={(e) => onGlobeSpeedChange(e.value)}
             className="w-full flex-col m-auto"
           />

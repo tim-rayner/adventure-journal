@@ -41,7 +41,6 @@ export const mapSlice = createSlice({
 
     //reducer to toggle a toolbox layer based on the state name
     toggleLayer: (state, action) => {
-      //@ts-ignore
       state.toolBox[action.payload] = !state.toolBox[action.payload];
     },
 
@@ -73,7 +72,6 @@ export const mapSlice = createSlice({
       state.visitedCountries = action.payload;
       //map the country names to their respective country codes
       state.visitedCountryCodes = action.payload.map(
-        //@ts-ignore
         (country) => country.country
       );
     },
