@@ -69,8 +69,6 @@ export default function Map() {
 
   //reset globe attributes on store change
   useEffect(() => {
-    console.log("something changed");
-
     globeEl.current.controls().autoRotate = globeState.globeAutoRotate;
 
     globeEl.current.controls().autoRotateSpeed = globeState.globeSpeed;

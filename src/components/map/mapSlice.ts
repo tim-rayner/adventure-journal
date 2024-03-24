@@ -6,7 +6,7 @@ export const mapSlice = createSlice({
     value: 0,
     toolBox: {
       layerOpen: false,
-      menuOpen: false,
+      menuOpen: true,
       settingsOpen: false,
       socialOpen: false,
     },

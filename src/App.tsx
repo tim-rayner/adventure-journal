@@ -2,6 +2,7 @@ import "./App.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import Home from "./views/Home";
 import { PrimeReactProvider } from "primereact/api";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 <head>
   <script

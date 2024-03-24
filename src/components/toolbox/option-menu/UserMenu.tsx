@@ -8,6 +8,7 @@ import { MultiSelect } from "primereact/multiselect";
 //Stores
 import { useSelector, useDispatch } from "react-redux";
 import { toggleLayer, updateVisitedCountries } from "../../map/mapSlice";
+import GoogleAuth from "../../auth/GoogleAuth";
 
 export default function UserMenu({ visible }: { visible: boolean }) {
   const dispatch = useDispatch();
@@ -65,6 +66,9 @@ export default function UserMenu({ visible }: { visible: boolean }) {
           />
         </div>
         <div className="dropdown-divider"></div>
+      </div>
+      <div className="auth-wrapper">
+        <GoogleAuth />
       </div>
     </Dialog>
   );
