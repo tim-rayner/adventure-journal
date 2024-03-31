@@ -12,12 +12,15 @@ import SpaceBarIcon from "@mui/icons-material/SpaceBar";
 //Stores
 import { updatedGlobeAutoRotate } from "../components/map/mapSlice";
 import { useDispatch, useSelector } from "react-redux";
+import SelectedCountryModal from "../components/SelectedCountryModal";
 
 export default function Home() {
   const dispatch = useDispatch();
   const globeState = useSelector((state) => state.map?.globe);
-
   const toolBoxState = useSelector((state) => state.map?.toolBox);
+  const showSelectedCountryModalState = useSelector(
+    (state) => state.map?.showSelectedCountryModal
+  );
 
   const [globeAutoRotate, setGlobeAutoRotate] = useState<boolean>(
     globeState.globeAutoRotate
@@ -38,6 +41,9 @@ export default function Home() {
   const [optionSettingsVisible, setOptionSettingsVisible] = useState<boolean>(
     toolBoxState.settingsOpen
   );
+
+  const [selectedCountryModalVisible, setSelectedCountryModalVisible] =
+    useState<boolean>(showSelectedCountryModalState);
 
   //add event listener to change globe rotate toggle when the user presses the spacebar
   useEffect(() => {
@@ -63,6 +69,10 @@ export default function Home() {
     setOptionSettingsVisible(toolBoxState.settingsOpen);
   }, [toolBoxState]);
 
+  useEffect(() => {
+    setSelectedCountryModalVisible(showSelectedCountryModalState);
+  }, [showSelectedCountryModalState]);
+
   return (
     <div className="home flex flex-col relative text-white bg-[#282c34] min-h-[100vh]">
       <div className="flex justify-center"></div>
@@ -73,6 +83,7 @@ export default function Home() {
       <OptionSocial visible={optionSocialVisible} />
       <OptionLayer visible={optionLayerVisible} />
       <OptionSettings visible={optionSettingsVisible} />
+      <SelectedCountryModal visible={selectedCountryModalVisible} />
       <div className="largeOnly absolute bottom-0 right-0 p-6 text-xl opacity-60 flex justify-center items-center w-full ">
         <p>
           Press <SpaceBarIcon className="-mb-2" /> to{" "}

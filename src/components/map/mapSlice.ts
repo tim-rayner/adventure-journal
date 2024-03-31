@@ -6,7 +6,7 @@ export const mapSlice = createSlice({
     value: 0,
     toolBox: {
       layerOpen: false,
-      menuOpen: true,
+      menuOpen: false,
       settingsOpen: false,
       socialOpen: false,
     },
@@ -19,7 +19,8 @@ export const mapSlice = createSlice({
       showCities: false,
       showMapImg: true,
     },
-
+    selectedCountry: {},
+    showSelectedCountryModal: false,
     visitedCountries: [],
     visitedCountryCodes: [],
   },
@@ -42,6 +43,14 @@ export const mapSlice = createSlice({
     //reducer to toggle a toolbox layer based on the state name
     toggleLayer: (state, action) => {
       state.toolBox[action.payload] = !state.toolBox[action.payload];
+    },
+
+    toggleSelectedCountryModal: (state, action) => {
+      state.showSelectedCountryModal = action.payload;
+    },
+
+    setStoreSelectedCountry: (state, action) => {
+      state.selectedCountry = action.payload;
     },
 
     updatedGlobeSpeed: (state, action) => {
@@ -92,6 +101,8 @@ export const {
   toggleShowExplorationPercentage,
   toggleShowCities,
   toggleMapImg,
+  toggleSelectedCountryModal,
+  setStoreSelectedCountry,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

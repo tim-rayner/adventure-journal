@@ -8,7 +8,11 @@ import Globe from "react-globe.gl";
 
 //Stores
 import { useDispatch, useSelector } from "react-redux";
-import { updatedGlobeAutoRotate } from "./mapSlice";
+import {
+  updatedGlobeAutoRotate,
+  setStoreSelectedCountry,
+  toggleSelectedCountryModal,
+} from "./mapSlice";
 
 export default function Map() {
   const globeState = useSelector((state) => state.map?.globe);
@@ -112,6 +116,16 @@ export default function Map() {
     setHoverD(d);
   };
 
+  const onPolygonClick = (d: object) => {
+    dispatch(toggleSelectedCountryModal(true));
+    dispatch(
+      setStoreSelectedCountry({
+        properties: d.properties,
+        coordinates: d.geometry.coordinates[0][0],
+      })
+    );
+  };
+
   return (
     <Globe
       height={globeHeight}
@@ -130,6 +144,7 @@ export default function Map() {
         <b>${d.ADMIN}</b> 
       `}
       onPolygonHover={(d) => onHexHover(d)}
+      onPolygonClick={(d) => onPolygonClick(d)}
       polygonsTransitionDuration={300}
       hexPolygonResolution={3} //values higher than 3 makes it buggy
       hexPolygonMargin={0}
