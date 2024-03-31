@@ -106,8 +106,8 @@ export default function SelectedCountryModal({
       draggable={false}
       position={viewportWidth < 768 ? "top" : "center"}
     >
-      <div className="selected-country-wrapper">
-        <label> Visited </label>
+      <div className="selected-country-wrapper flex">
+        <label className="mr-3"> Visited </label>
         <InputSwitch checked={checked} onChange={(e) => setChecked(e.value)} />
       </div>
     </Dialog>
