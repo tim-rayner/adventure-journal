@@ -67,7 +67,7 @@ export default function SelectedCountryModal({
 
       exists ? setChecked(true) : setChecked(false);
     }
-  }, [visitedCountries]);
+  }, [visitedCountries, selectedCountry]);
 
   //selectedCountryCoords
 
