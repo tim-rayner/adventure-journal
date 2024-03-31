@@ -59,7 +59,6 @@ export default function SelectedCountryModal({
 
   //update checked
   useEffect(() => {
-    console.log("!!");
     if (selectedCountry) {
       //does selected country exist in visited countries
       const exists = visitedCountries.some(
@@ -73,7 +72,6 @@ export default function SelectedCountryModal({
   //selectedCountryCoords
 
   useEffect(() => {
-    console.log("checked changed");
     if (selectedCountry) {
       if (checked) {
         //add to visited countries
