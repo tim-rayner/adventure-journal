@@ -71,9 +71,9 @@ export default function UserMenu({ visible }: { visible: boolean }) {
         </div>
         <div className="dropdown-divider"></div>
       </div>
-      <div className="auth-wrapper">
+      {/* <div className="auth-wrapper">
         <GoogleAuth />
-      </div>
+      </div> */}
     </Dialog>
   );
 }
