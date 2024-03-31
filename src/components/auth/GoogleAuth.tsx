@@ -5,7 +5,7 @@ const GoogleAuth = () => {
   const clientId = process.env.REACT_APP_OAUTHID;
 
   useEffect(() => {
-    console.log(clientId);
+    // console.log(clientId);
   }, [clientId]);
 
   return (

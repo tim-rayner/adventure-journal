@@ -33,6 +33,10 @@ export default function UserMenu({ visible }: { visible: boolean }) {
     };
   }, []);
 
+  useEffect(() => {
+    setVisitedCountries(globeStateCountries);
+  }, [globeStateCountries]);
+
   const handleCheckboxChange = (country: string) => {
     setVisitedCountries(country);
     dispatch(updateVisitedCountries(country));
